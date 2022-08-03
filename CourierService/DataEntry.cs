@@ -75,7 +75,6 @@ namespace CourierService
             bool valid;
             int maxPackage = Convert.ToInt32(_config["MaxNumberOfPackageAlowed"]);
             Type type = arg.GetType();
-
             Console.Write(prompt);
             var inputCursorLeft = Console.CursorLeft;
             var inputCursorTop = Console.CursorTop;
