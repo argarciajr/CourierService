@@ -51,6 +51,22 @@ namespace CourierService
 
                 _packages.Add(newPackage);
             }
+
+            if (_packages.Count() > 0)
+            {
+                Delivery delivery = new Delivery();
+
+                //Add some space to display output clearly
+                Console.WriteLine(" ");
+                Console.WriteLine("Output:");
+
+                foreach (var item in _packages)
+                {
+                    delivery.CalculateDeliveryCost(_baseDeliveryCost, item);
+                }
+
+                Console.WriteLine(" ");
+            }
         }
 
         public T EvaluateInput<T>(string prompt, T arg)

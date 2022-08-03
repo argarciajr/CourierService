@@ -12,6 +12,7 @@
     <None Remove="Microsoft.Extensions.Configuration.Json" />
     <None Remove="Models\" />
     <None Remove="Tombo.db" />
+    <None Remove="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.27">
@@ -24,6 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="**/*">
