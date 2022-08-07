@@ -5,7 +5,7 @@ namespace CourierService
     {
         public static void ReadMe()
         {
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine("*** User Guide ***", Console.ForegroundColor);
             Console.WriteLine("*", Console.ForegroundColor);
             Console.WriteLine("* Base Delivery Cost: Required. Accepts only numbers or decimal values more than zero i.e 10 or 100.75", Console.ForegroundColor);
