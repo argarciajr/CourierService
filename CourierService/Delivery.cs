@@ -1,14 +1,21 @@
 ﻿using System;
+using System.Linq;
 using CourierService.Models;
 
 namespace CourierService
 {
     public class Delivery : IDelivery
     {
-        public void CalculateDeliveryCost(double baseDeliveryCost, Package package)
+        public double CalculateDeliveryCost(Package package, double baseDeliveryCost)
         {
-            decimal calculatedDiscount = 0M;
-            decimal totalDeliveryCost = 0M;
+            var deliveryCost = baseDeliveryCost + (package.Weight * 10) + (package.Distance * 5);
+
+            return deliveryCost;
+        }
+
+        public decimal CalculateDiscount(double deliveryCost, Package package)
+        {
+            decimal calculatedDiscount = 0;
 
             //check if inputted offer code is valid and the package weight and distance meets the criteria before applying the discount
             OfferCriteria criteria = new OfferCriteria();
@@ -17,14 +24,11 @@ namespace CourierService
                 if ((criteria.MinWeight <= package.Weight && package.Weight <= criteria.MaxWeight)
                     && (criteria.MinDistance <= package.Distance && package.Distance <= criteria.MaxDistance))
                 {
-                    calculatedDiscount = (decimal)baseDeliveryCost * (criteria.Discount / 100m);
-                    totalDeliveryCost = (decimal)baseDeliveryCost - calculatedDiscount;
+                    calculatedDiscount = (decimal)deliveryCost * (criteria.Discount / 100);
                 }
+             }
 
-            }
-
-            Console.WriteLine($"{package.PackageID} {String.Format("{0:0.00}", calculatedDiscount)} " +
-                $"{String.Format("{0:0.00}", totalDeliveryCost > 0 ? totalDeliveryCost : (decimal)baseDeliveryCost)}");
+            return calculatedDiscount;
         }
     }
 }

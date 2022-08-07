@@ -4,6 +4,8 @@ namespace CourierService
 {
     public interface IDelivery
     {
-        void CalculateDeliveryCost(double baseDeliveryCost, Package package);
+        public double CalculateDeliveryCost(Package package, double baseDeliveryCost);
+
+        public decimal CalculateDiscount(double baseDeliveryCost, Package package);
     }
 }

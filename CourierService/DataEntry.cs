@@ -22,15 +22,17 @@ namespace CourierService
             //Display a user guide in inputting values
             Utility.ReadMe();
 
-            int numberofPackage = 1;
-            _baseDeliveryCost = EvaluateInput<double>("Base Delivery Cost: ", _baseDeliveryCost);
-            numberofPackage = EvaluateInput<int>("Number of Package: ", numberofPackage);
-
             _packages = new List<Package>();
+            //package cannot be empty or zero
+            int numberofPackage = 1;
             string packageId = "";
             double packageWeight = 0D;
             double distance = 0D;
             string offerCode;
+
+            //Enter values
+            _baseDeliveryCost = EvaluateInput<double>("Base Delivery Cost: ", _baseDeliveryCost);
+            numberofPackage = EvaluateInput<int>("Number of Package: ", numberofPackage);
 
             for (int i = 1; i <= numberofPackage; i++)
             {
@@ -52,32 +54,23 @@ namespace CourierService
                 _packages.Add(newPackage);
             }
 
-            if (_packages.Count() > 0)
-            {
-                Delivery delivery = new Delivery();
-
-                //Add some space to display output clearly
-                Console.WriteLine(" ");
-                Console.WriteLine("Output:");
-
-                foreach (var item in _packages)
-                {
-                    delivery.CalculateDeliveryCost(_baseDeliveryCost, item);
-                }
-
-                Console.WriteLine(" ");
-            }
+            //Display calculation result
+            DisplayOutput(_baseDeliveryCost, _packages);
         }
 
         public T EvaluateInput<T>(string prompt, T arg)
         {
+            int maxPackage = Convert.ToInt32(_config["MaxNumberOfPackageAlowed"]);
             object value = null;
             bool valid;
-            int maxPackage = Convert.ToInt32(_config["MaxNumberOfPackageAlowed"]);
             Type type = arg.GetType();
+
             Console.Write(prompt);
+
+            //record the original cursor position
             var inputCursorLeft = Console.CursorLeft;
             var inputCursorTop = Console.CursorTop;
+
             var input = Console.ReadLine();
 
             if (type == typeof(string))
@@ -121,6 +114,24 @@ namespace CourierService
             }
 
             return (T)Convert.ChangeType(value, typeof(T));
+        }
+
+        public void DisplayOutput(double baseCost, List<Package> packages)
+        {
+            Delivery delivery = new Delivery();
+
+            //Add some space to display output clearly
+            Console.WriteLine(" ");
+            Console.WriteLine("Output:");
+
+            foreach (var item in packages)
+            {
+                var deliveryCost = delivery.CalculateDeliveryCost(item, baseCost);
+                var discount = delivery.CalculateDiscount(deliveryCost, item);
+                var totalDeliveryCost = (decimal)deliveryCost - discount;
+
+                Console.WriteLine($"{item.PackageID} {String.Format("{0:0.00}", discount)} {String.Format("{0:0.00}", totalDeliveryCost)}");
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ namespace CourierServiceTests
     public class OfferCodesTests
     {
         [TestMethod]
-        public void IsOfferCodeValid_WithInvalidOfferCode()
+        public void IsOfferCodeValid_InputInvalidOfferCode_ShouldReturnFalse()
         {
             //Arrange
             bool valid;
@@ -23,7 +23,7 @@ namespace CourierServiceTests
         }
 
         [TestMethod]
-        public void IsOfferCodeValid_WithValidOfferCode()
+        public void IsOfferCodeValid_InputValidOfferCode_ShouldReturnTrue()
         {
             //Arrange
             bool valid;
@@ -39,7 +39,7 @@ namespace CourierServiceTests
         }
 
         [TestMethod]
-        public void IsOfferCodeValid_WhenOfferCodeLeftBlank()
+        public void IsOfferCodeValid_InputBlankOfferCode_ShouldReturnFalse ()
         {
             //Arrange
             bool valid;
