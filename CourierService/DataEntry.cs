@@ -58,6 +58,98 @@ namespace CourierService
             DisplayOutput(_baseDeliveryCost, _packages);
         }
 
+        //Overloading EvaluateInput method
+        public string EvaluateInput(string prompt, string arg)
+        {
+            string value = "";
+            Type type = arg.GetType();
+
+            Console.Write(prompt);
+
+            //record the original cursor position
+            var inputCursorLeft = Console.CursorLeft;
+            var inputCursorTop = Console.CursorTop;
+
+            var input = Console.ReadLine();
+            if (type == typeof(string))
+            {
+                while (String.IsNullOrEmpty(input) || String.Equals(input, " "))
+                {
+                    Utility.ClearInput(inputCursorLeft, inputCursorTop);
+                    input = Console.ReadLine();
+                }
+            }
+
+            value = input;
+            return value;
+        }
+
+        public double EvaluateInput(string prompt, double arg)
+        {
+            double value = 0;
+            bool valid;
+            Type type = arg.GetType();
+
+            Console.Write(prompt);
+
+            //record the original cursor position
+            var inputCursorLeft = Console.CursorLeft;
+            var inputCursorTop = Console.CursorTop;
+
+            var input = Console.ReadLine();
+
+            if (type == typeof(double))
+            {
+                double dblVal = 0;
+                valid = double.TryParse(input, out dblVal);
+                if (dblVal <= 0)
+                {
+                    valid = false;
+                }
+                while ((!valid))
+                {
+                    Utility.ClearInput(inputCursorLeft, inputCursorTop);
+                    valid = double.TryParse(Console.ReadLine(), out dblVal) && dblVal > 0;
+                }
+                value = dblVal;
+            }
+            return value;
+        }
+
+        public int EvaluateInput(string prompt, int arg)
+        {
+            int maxPackage = Convert.ToInt32(_config["MaxNumberOfPackageAlowed"]);
+            int value = 0;
+            bool valid;
+            Type type = arg.GetType();
+
+            Console.Write(prompt);
+
+            //record the original cursor position
+            var inputCursorLeft = Console.CursorLeft;
+            var inputCursorTop = Console.CursorTop;
+
+            var input = Console.ReadLine();
+
+            if (type == typeof(int))
+            {
+                int inputVal = 0;
+                valid = Int32.TryParse(input, out inputVal);
+                if (inputVal <= 0 || inputVal > maxPackage)
+                {
+                    valid = false;
+                }
+                while (!valid)
+                {
+                    Utility.ClearInput(inputCursorLeft, inputCursorTop);
+                    valid = Int32.TryParse(Console.ReadLine(), out inputVal) && Enumerable.Range(1, maxPackage).Contains(inputVal);
+                }
+                value = inputVal;
+            }
+            return value;
+        }
+
+        //Simplyfying EvaluateInput using Generics
         public T EvaluateInput<T>(string prompt, T arg)
         {
             int maxPackage = Convert.ToInt32(_config["MaxNumberOfPackageAlowed"]);
