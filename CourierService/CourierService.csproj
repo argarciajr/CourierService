@@ -5,6 +5,13 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <LangVersion>default</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType></DebugType>
+    <LangVersion>default</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <None Remove="Microsoft.EntityFrameworkCore.Design" />
     <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
@@ -13,6 +20,9 @@
     <None Remove="Models\" />
     <None Remove="Tombo.db" />
     <None Remove="Interfaces\" />
+    <None Remove="appsettings.json" />
+    <None Remove="Microsoft.Extensions.Configuration" />
+    <None Remove="Microsoft.Extensions.Configuration.FileExtensions" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.27">
@@ -22,6 +32,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.27" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.27" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.27" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.27" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.1.27" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -30,6 +42,14 @@
   <ItemGroup>
     <Content Include="**/*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="appsettings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 </Project>
